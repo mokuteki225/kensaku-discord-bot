@@ -1,4 +1,3 @@
-const config = require('../config.json');
 const { MessageEmbed } = require('discord.js');
 const User = require('../models/user');
 
