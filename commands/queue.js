@@ -31,8 +31,10 @@ module.exports = async (message, arguments) => {
         const result = await User.findAll({
             where: {
                 inQueue: 1
-            }
+            }, raw: true
         });
+
+        console.log(result);        
 
         const playersSetInQueue = (result.length % 2 === 0 ? result.length : result.length - 1);
 
