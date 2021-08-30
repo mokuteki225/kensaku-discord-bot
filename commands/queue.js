@@ -22,6 +22,7 @@ module.exports = async (message, arguments) => {
         embedDescription = 'сначало привяжи свой аккаунт ----> !link';
         sendEmbed(message, embedDescription);
     } else {
+
         await User.update({ inQueue: 1 }, {
             where: {
                 discordId: message.author.id
@@ -34,15 +35,17 @@ module.exports = async (message, arguments) => {
             }, raw: true
         });
 
+        embedDescription = 'ты находишься в очереди, игроков в очереди ----> ' + result.length;
+        sendEmbed(message, embedDescription);
+
         if (result.length >= 2) {
             const playersSetInQueue = (result.length % 2 === 0 ? result.length : result.length - 1);
 
-            embedDescription = 'ты находишься в очереди, игроков в очереди ----> ' + result.length;
-            sendEmbed(message, embedDescription);
+            console.log(result[0].dotaId);
 
-            for (let i = 0; i < playersSetInQueue; i++) {
-                global.users.get(result[i].discordId).send(result[i + 1].dotaId);
-                global.users.get(result[i + 1].discordId).send(result[i].dotaId);
+            for (let i = 0; i < playersSetInQueue; i+=2) {
+                await global.users.get(result[i].discordId).send(result[i + 1].dotaId);
+                await global.users.get(result[i + 1].discordId).send(result[i].dotaId);
 
                 await User.update({ inQueue: 0 }, {
                     where: {
@@ -53,4 +56,4 @@ module.exports = async (message, arguments) => {
             }
         }
     }
-};
+}
