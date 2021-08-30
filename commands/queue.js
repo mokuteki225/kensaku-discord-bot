@@ -34,23 +34,23 @@ module.exports = async (message, arguments) => {
             }, raw: true
         });
 
-        console.log(result);        
+        if (result.length >= 2) {
+            const playersSetInQueue = (result.length % 2 === 0 ? result.length : result.length - 1);
 
-        const playersSetInQueue = (result.length % 2 === 0 ? result.length : result.length - 1);
+            embedDescription = 'ты находишься в очереди, игроков в очереди ----> ' + result.length;
+            sendEmbed(message, embedDescription);
 
-        embedDescription = 'ты находишься в очереди, игроков в очереди ----> ' + result.length;
-        sendEmbed(message, embedDescription);
+            for (let i = 0; i < playersSetInQueue; i++) {
+                global.users.get(result[i].discordId).send(result[i + 1].dotaId);
+                global.users.get(result[i + 1].discordId).send(result[i].dotaId);
 
-        for (let i = 0; i < playersSetInQueue; i++) {
-            global.users.get(result[i].discordId).send(result[i + 1].dotaId);
-            global.users.get(result[i + 1].discordId).send(result[i].dotaId);
-
-            await User.update({ inQueue: 0 }, {
-                where: {
-                    discordId: result[i].discordId,
-                    discordId: result[i + 1].discordId
-                }
-            });
+                await User.update({ inQueue: 0 }, {
+                    where: {
+                        discordId: result[i].discordId,
+                        discordId: result[i + 1].discordId
+                    }
+                });
+            }
         }
     }
 };
