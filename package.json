@@ -1,0 +1,36 @@
+{
+  "name": "lobakbot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start" : "node index.js" 
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mokuteki225/kensaku-discord-bot.git"
+  },
+  "keywords": [
+    "dota"
+  ],
+  "author": "mokuteki",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mokuteki225/kensaku-discord-bot/issues"
+  },
+  "homepage": "https://github.com/mokuteki225/kensaku-discord-bot#readme",
+  "dependencies": {
+    "@discordjs/builders": "^0.5.0",
+    "discord-oauth2": "^2.7.1",
+    "discord.js": "^13.0.1",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "mysql2": "^2.3.0",
+    "sequelize": "^6.6.5",
+    "steamid": "^2.0.0"
+  },
+  "engines": {
+    "node": "16.6.2",
+    "npm": "7.20.3"
+  }
+}
